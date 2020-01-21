@@ -1,0 +1,55 @@
+{
+  "name": "@drumtj/expgen",
+  "version": "1.0.0",
+  "description": "javascript easy regexp generator",
+  "scripts": {
+    "start": "webpack-dev-server --contentBase ./dist --open chrome --open-page test.html",
+    "build": "webpack -p",
+    "release": "npm run build && npm run deploy && np --no-cleanup --yolo --no-release-draft",
+    "_release": "npm run build && npm run deploy",
+    "deploy": "git add -A && git commit -m 'deploy' && git push origin master",
+    "deploy_with_page": "git add -A && git commit -m 'deploy' && git push origin master && git subtree push --prefix examples origin gh-pages",
+    "pull": "git pull origin master --allow-unrelated-histories"
+  },
+  "keywords": [
+    "regexp",
+    "expgen",
+    "regular expression",
+    "regex",
+    "match"
+  ],
+  "homepage": "https://github.com/drumtj/expgen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drumtj/expgen"
+  },
+  "bugs": {
+    "url": "https://github.com/drumtj/expgen/issues",
+    "email": "drumtj@gmail.com"
+  },
+  "author": {
+    "name": "tj",
+    "email": "drumtj@gmail.com"
+  },
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "contributors": [],
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-transform-arrow-functions": "^7.7.4",
+    "@babel/plugin-transform-async-to-generator": "^7.7.4",
+    "@babel/plugin-transform-classes": "^7.7.4",
+    "@babel/polyfill": "^7.7.0",
+    "@babel/preset-env": "^7.7.6",
+    "babel-loader": "^8.0.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-sources": "^1.3.0"
+  },
+  "dependencies": {}
+}

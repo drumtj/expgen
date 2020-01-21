@@ -1,0 +1,161 @@
+let debug = false;
+
+function get(str){
+	let m = this.exec(str);
+	return m ? m.slice(1) : m;
+}
+RegExp.prototype.get = function(str){
+	return get.call(this, str);
+}
+
+function log(rest){
+	if(!debug) return;
+	console.log.apply(null, Array.prototype.slice.apply(arguments));
+}
+
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+	// return str.replace(/[\-\[\]\/\(\)\*\+\?\.\\\^\$\|]/g, '\\$&').replace(/[\{]/g, '(').replace(/[\}]/g, ')');
+}
+
+
+//정규식 대응맵
+//1 글자만 처리
+const spch = {
+	'*': '.*',// 붙어있는 모든 문자 {0,}
+	'!': '.',// 자리수를 차지하는 1글자
+	'?': '.?',// 있을수도 없을수도있는 1글자
+	'~': '+',// 이전글자 한개이상 연속된 {1,}
+	'{': '(',//
+	'}': ')',//
+	'|': '|',
+	// '\\': '\\',
+	//'#': '[0-9]',// 한자리수를 차지하는 숫자
+	// #이 여러개붙으면 \d{1,n} 으로 만든다
+	'#': (str)=>{
+		return str.replace(/\#+/g, (found)=>{
+			if(found.length > 1){
+				return `\\d{1,${found.length}}`;
+			}else{
+				return found.replace(/#/g, '[0-9]');
+			}
+		});
+	}
+};
+const spchArr = Object.keys(spch);
+
+const unitC = String.fromCharCode(67+128);
+
+//문자 시프트 맵
+const cmap = {
+	'?': String.fromCharCode(67+129),
+	'(': String.fromCharCode(67+130),
+	')': String.fromCharCode(67+131),
+	'*': String.fromCharCode(67+132),
+	'!': String.fromCharCode(67+133),
+	'{': String.fromCharCode(67+134),
+	'}': String.fromCharCode(67+135),
+	'|': String.fromCharCode(67+136),
+	// '\\': String.fromCharCode(67+137),
+	'#': '#',
+	'~': '~'
+}
+//다른 레이어의 문자 시프트 맵
+const cmap2 = {
+	'?': String.fromCharCode(67+150),
+	'(?:': String.fromCharCode(67+151),
+	')': String.fromCharCode(67+152)
+}
+
+export default function expgen(pattern){
+  // *이 여러개붙으면 하나로 만든다.
+  pattern = pattern.replace(/\*+/g, '*');
+
+  log("* 중복제거:", pattern);
+
+
+  // () 안에 있는 애들은 ?와일드카드 기능에 단어를 명시하는 기능을 함.
+  // http(s) == https
+  // http(s|x) => 문자1자리에 s나 x가 있을수있다.
+  // http(s|x)? => 문자1자리에 s나 x가 있거나 없을수도 있다.
+
+  // 나머지 작업이 처리되기 전까지 따로 보관하자
+	// let owc = 0;
+  let optionalWords = [];
+	// function analysisWordGroup(pt){
+	// let groupFindExp = /\[([^\[\]]+)\](\?)?/;
+	// let groupFindExpG = /\[([^\[\]]+)\](\?)?/g;
+	let groupFindExp = /\(([^\(\)]+)\)(\?)?/;
+	let groupFindExpG = /\(([^\(\)]+)\)(\?)?/g;
+	while(groupFindExp.test(pattern)){
+	  pattern = pattern.replace(groupFindExpG, (found,word,q)=>{
+      // let cword = cmap['('] + word.split('|').map(escapeRegExp).join('|') + cmap[')'] + (q?cmap2['?']:'');
+			let cword = cmap2['(?:'] + word + cmap2[')'] + (q?cmap2['?']:'');
+      optionalWords.push(cword);
+      let key = unitC + (optionalWords.length-1) + unitC;
+	    log({found,word,q, key, cword})
+			// let k = unitC + (owc++) + unitC;
+
+	    //optionalWords[k] = cmap['('] + word.split('|').map(escapeRegExp).join('|') + cmap[')'] + (q?cmap2['?']:'');
+	    return key;
+	    // return `(${word})${must?'':'?'}`;
+	  })
+	}
+
+  log("옵셔널 단어처리:", pattern, optionalWords);
+
+  // 와일드 카드가 escape처리를 피하도록 문자 시프트
+  spchArr.forEach(c=>{
+    pattern = pattern.replace(new RegExp(escapeRegExp(c), 'g'), cmap[c]);
+  })
+	log("와일드카드 문자 변경:", pattern);
+
+	//추출용 문자 {} 를 ()로 교체
+	// pattern = pattern.replace(/\{/g, '(').replace(/\}/g, ')');
+
+	// log("{} 문자 ()로 변경:", pattern);
+  //와일드 카드를 제외한 나머지 문자를 RegExp에 쓸수 있도록 escape처리
+  pattern = escapeRegExp(pattern);
+
+	log("escape:", pattern);
+
+  // 복구
+  spchArr.forEach(c=>{
+    pattern = pattern.replace(new RegExp(cmap[c], 'g'), c);
+  })
+
+  log("와일드카드 문자 복구:", pattern);
+
+	//()안 단어정규식 복구
+
+	for(let i=optionalWords.length-1; i>=0; i--){
+    pattern = pattern.replace(unitC + (i) + unitC, optionalWords[i]);
+  }
+	log("optionalWords", optionalWords);
+
+  log("옵셔널단어 문자삽입:", pattern);
+
+  for(let char in cmap){
+    pattern = pattern.replace(new RegExp(cmap[char], 'g'), char);
+  }
+
+  log("1단계치환문자 복구", pattern);
+
+  spchArr.forEach(c=>{
+    if(typeof spch[c] === "function"){
+      pattern = spch[c](pattern);
+    }else{
+      pattern = pattern.replace(new RegExp(escapeRegExp(c), 'g'), spch[c]);
+    }
+  })
+
+  log("와일드카드 정규식 처리:", pattern);
+
+  for(let char in cmap2){
+    pattern = pattern.replace(new RegExp(cmap2[char], 'g'), char);
+  }
+
+  log("2단계치환문자 복구", pattern);
+
+  return new RegExp("^"+pattern+"$");
+}
