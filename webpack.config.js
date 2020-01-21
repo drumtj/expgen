@@ -136,18 +136,6 @@ let pfh = `(function webpackUniversalModuleDefinition(root, factory) {
   }
 })(typeof self !== 'undefined' ? self : this, function() {
   return `.replace(/MyLibrary/g, libraryName);
-let pfh2 = `(function webpackUniversalModuleDefinition(root, factory) {
-  if(typeof exports === 'object' && typeof module === 'object')
-    module.exports = factory();
-  else if(typeof define === 'function' && define.amd)
-    define([], factory);
-  else if(typeof exports === 'object')
-    exports['MyLibrary'] = factory();
-  else{
-    root['MyLibrary'] = factory();
-  }
-})(typeof self !== 'undefined' ? self : this, function() {
-  return `.replace(/MyLibrary/g, libraryName);
 let pff = `\n})`
 
 let umdCfg = Object.assign({}, config);
@@ -158,13 +146,6 @@ umdCfg.output = {
 	// globalObject: 'this',
   filename: "./expgen.umd.js"
 }
-umdCfg.plugins = [
-  new WrapperPlugin({
-    test: /\.js$/,
-    header: pfh2,
-    footer: pff
-  }),
-]
 
 
 let globalCfg = Object.assign({}, config);

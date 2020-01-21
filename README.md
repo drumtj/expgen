@@ -1,6 +1,6 @@
 # expgen
 
-[![npm version](https://img.shields.io/npm/v/@drumtj/task-queue.svg?style=flat)](https://www.npmjs.com/package/@drumtj/expgen)
+[![npm version](https://img.shields.io/npm/v/@drumtj/expgen.svg?style=flat)](https://www.npmjs.com/package/@drumtj/expgen)
 [![license](https://img.shields.io/npm/l/@drumtj/expgen.svg)](#)
 
 easy javascript regular expression
@@ -23,17 +23,11 @@ $ npm install @drumtj/expgen
 ```
 
 Using cdn:
-
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.11/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.12/dist/expgen.js"></script>
 ```
 
-Using amd, commonjS Module
-
-```js
-const expgen = require('@drumtj/expgen');
-```
-
+Using ES2015
 ```js
 import expgen from '@drumtj/expgen';
 ```
