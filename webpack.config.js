@@ -143,9 +143,16 @@ umdCfg.output = {
   path: path.join(__dirname, "dist"),
   library: libraryName,
   libraryTarget: "umd",
-	globalObject: 'this',
+	// globalObject: 'this',
   filename: "./expgen.umd.js"
 }
+umdCfg.plugins = [
+  new WrapperPlugin({
+    test: /\.js$/,
+    header: pfh,
+    footer: pff
+  }),
+]
 
 
 let globalCfg = Object.assign({}, config);
