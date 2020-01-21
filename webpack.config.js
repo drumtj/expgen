@@ -143,6 +143,7 @@ umdCfg.output = {
   path: path.join(__dirname, "dist"),
   library: libraryName,
   libraryTarget: "umd",
+	globalObject: 'this',
   filename: "./expgen.umd.js"
 }
 

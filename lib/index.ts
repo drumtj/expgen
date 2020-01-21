@@ -217,7 +217,7 @@ const groupFindExp = /\(([^\(\)]+)\)(\?)?/;
 const groupFindExpG = /\(([^\(\)]+)\)(\?)?/g;
 const getterExpG = /\}\?/g
 
-export function expgen(pattern, flag){
+function expgen(pattern, flag){
 
 	if(typeof flag !== "string"){
     flag = undefined;
@@ -407,3 +407,5 @@ export function expgen(pattern, flag){
 }
 
 expgen.presets = presets;
+
+export default expgen;
