@@ -7,13 +7,12 @@ easy javascript regular expression
 
 ## Features
 
-### wildcard # @ ? ! (number, not number, single character that may or may not exist, a single character that must exist)
-### preset in characterset (korean, alphabet, alphabet-lowercase, alphabet-uppercase, alphabet+number, number, hex, symbol)
-### preset (number, email, domain, image file extension, hexadecimal, rgb, rgba)
-### automatic backslash in characterset
-### getter {}
-### extends method
-#### wrap, unwrap, get, getAll
+* wildcard # @ ? ! (number, not number, single character that may or may not exist, a single character that must exist)
+* preset in characterset (korean, alphabet, alphabet-lowercase, alphabet-uppercase, alphabet+number, number, hex, symbol)
+* preset (number, email, domain, image file extension, hexadecimal, rgb, rgba)
+* automatic backslash in characterset
+* getter {}
+* extends method (wrap, unwrap, get, getAll)
 
 ## Installing
 
@@ -26,7 +25,7 @@ $ npm install @drumtj/expgen
 Using cdn:
 
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.2/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.3/dist/expgen.js"></script>
 ```
 
 Using amd, commonjS Module
@@ -143,23 +142,14 @@ expgen("0x[&h]{6}").test("0xa8f4e3"); // true
 
 ### getter {}
 ```js
-expgen("i like {(apple|banana)}").get("i like banana"); // banana
+expgen("i like {(apple|banana)}").get("i like banana"); // ["banana"]
 
 ///// test example /////
-expgen("0x{[&h]{6}}").get("0xa8f4e3"); // a8f4e3
+expgen("0x{[&h]{6}}").get("0xa8f4e3"); // ["a8f4e3"]
 ```
 
 ### wildcard [? ! @ #]
 ```js
-// expgen("01[0156789](@)?###(#)?(@)?####")
-// unwrap, wrap
-// getAll
-// expgen("aaa", "g")
-// expgen("{010##}").unwrap().getAll("sdfsdf01055sefse01022sfsdf01033")
-//
-// remove Special character
-// var text = `sdfawsef@#$%DFGSDfgd,.?L<;ksdf|}A{Ss$T@!@\`312"`;
-// var result = text.replace(expgen("&symbol", "g").unwrap(), ''); // => "sdfawsefDFGSDfgdLksdfASsT312"
 
 // any character
 expgen("."); // /^.$/
@@ -399,6 +389,17 @@ expgen("&number").getAll("234.23-453,343aaaa-1.4444444444e+2;;;444");
 //   ["-1.4444444444e+2", "-", "1", "4444444444", "e+2"]
 //   ["444", "", "444", undefined, undefined]
 // ]
+
+expgen("{010##}").unwrap().getAll("sdfsdf01055sefse01022sfsdf01033");
+// [
+//   ["01055"],
+//   ["01022"],
+//   ["01033"]
+// ]
+
+// remove Special character
+var text = `sdfawsef@#$%DFGSDfgd,.?L<;ksdf|}A{Ss$T@!@\`312"`;
+var result = text.replace(expgen("&symbol", "g").unwrap(), ''); // "sdfawsefDFGSDfgdLksdfASsT312"
 ```
 
 ### Advanced example
