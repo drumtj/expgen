@@ -1,6 +1,6 @@
 {
   "name": "@drumtj/expgen",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "javascript easy regexp generator",
   "scripts": {
     "start": "webpack-dev-server --contentBase ./dist --open chrome --open-page test.html",
