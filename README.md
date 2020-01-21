@@ -24,7 +24,7 @@ $ npm install @drumtj/expgen
 
 Using cdn:
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.14/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.15/dist/expgen.js"></script>
 ```
 
 Using ES2015

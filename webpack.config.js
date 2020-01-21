@@ -86,17 +86,18 @@ let babelOptionIndex = {
         }
       }
     ]
-  ],
-  "plugins": [
-    "@babel/plugin-transform-classes",
-    "@babel/plugin-transform-async-to-generator",
-    "@babel/plugin-transform-arrow-functions"
   ]
+	// ,"plugins": [
+  //   "@babel/plugin-transform-classes",
+  //   "@babel/plugin-transform-async-to-generator",
+  //   "@babel/plugin-transform-arrow-functions"
+  // ]
 }
 
 const config = {
   mode: "production", //"devtool",//"production",// "none"
-  entry: ["@babel/polyfill", "./lib/index.ts"],
+	//"@babel/polyfill",
+  entry: [ "./lib/index.ts"],
   resolve: {
     extensions: [".js", ".ts"]
   },

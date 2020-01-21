@@ -80,7 +80,7 @@ function escapeRegExp(str, exceptions?) {
   	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 	}
 
-	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, (found)=>{
+	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, function(found){
     // console.error({found})
 		return exceptions.indexOf(found)>-1?found:'\\'+found;
 		// return cmap2[found]?'\\'+cmap2[found]:'\\'+found;
@@ -182,7 +182,7 @@ const commandInCharset = {
 	//"&s": '-!@#$%^&*(){},.+~:;'_|\\/?<>\\[\\]\\`]'
 	// '!': '^'
 }
-const commandInCharsetSortedKeys = Object.keys(commandInCharset).sort((a,b)=>{
+const commandInCharsetSortedKeys = Object.keys(commandInCharset).sort(function(a,b){
 	return b.length-a.length;
 })
 //escape처리와 명령어 변환과정에서 끝까지 보호해야할 문자 리스트
@@ -226,9 +226,9 @@ function expgen(pattern, flag){
 	//명령줄 선 처리
 	//다른명령어에 포함되는 명령어가 있는경우 때문에 가장 긴 명령부터 처리해야함
 	//presets는 외부에 노출된 변수로, 변동사항이 있을 수 있기때문에 매번 정렬을 해야함.
-	Object.keys(presets).sort((a,b)=>{
+	Object.keys(presets).sort(function(a,b){
 		return b.length-a.length;
-	}).forEach(com=>{
+	}).forEach(function(com){
 		if(pattern.indexOf(com) > -1){
 			pattern = pattern.replace(new RegExp(escapeRegExp(com), 'g'), presets[com]);
 		}
@@ -238,7 +238,7 @@ function expgen(pattern, flag){
 
 
 	let fixedWords = [];
-	pattern =	pattern.replace(/\\./g, found=>{
+	pattern =	pattern.replace(/\\./g, function (found){
     fixedWords.push(found);
 		return unitB + (fixedWords.length-1) + unitB;
 	})
@@ -249,7 +249,7 @@ function expgen(pattern, flag){
 
 	// let charSelectorFindExp = /\[([^\[\]]+)\](\?)?/;
 
-	pattern = pattern.replace(charSelectorFindExpG, (found,word,q)=>{
+	pattern = pattern.replace(charSelectorFindExpG, function(found,word,q){
 		// console.error("before", word);
 		// word = word.split(';').map(com=>{
 		// 	return commandInCharset[com]?cmap2[commandInCharset[com]]||commandInCharset[com]:com;
@@ -260,7 +260,7 @@ function expgen(pattern, flag){
 		word = escapeRegExp(word, charSelectorExceptionChars);
 
 
-		commandInCharsetSortedKeys.forEach(com=>{
+		commandInCharsetSortedKeys.forEach(function(com){
 			if(word.indexOf(com) > -1){
 				word = word.replace(new RegExp(escapeRegExp(com), 'g'), cmap2[commandInCharset[com]]||commandInCharset[com]);
 			}
@@ -275,7 +275,7 @@ function expgen(pattern, flag){
 
 	let lengthExpList = [];
 	// let lengthExpG = /\{((?:\d+)?,?(?:\d+)?)\}/g
-	pattern = pattern.replace(lengthExpG, (found,word,q)=>{
+	pattern = pattern.replace(lengthExpG, function(found,word,q){
 		lengthExpList.push(cmap2['{'] + word + cmap2['}']);
 		return unitD + (lengthExpList.length-1) + unitD;
 	})
@@ -290,7 +290,7 @@ function expgen(pattern, flag){
 	// let groupFindExp = /\(([^\(\)]+)\)(\?|\*)?/;
 	// let groupFindExpG = /\(([^\(\)]+)\)(\?|\*)?/g;
 	while(groupFindExp.test(pattern)){
-	  pattern = pattern.replace(groupFindExpG, (found,word,q)=>{
+	  pattern = pattern.replace(groupFindExpG, function(found,word,q){
 			let cword = cmap2['(?:'] + word + cmap2[')'] + (q?cmap2[q]:'');
       optionalWords.push(cword);
       let key = unitC + (optionalWords.length-1) + unitC;
@@ -306,7 +306,7 @@ function expgen(pattern, flag){
   // pattern = pattern.replace(/\*+/g, '*');
   // log("* 중복제거:", pattern);
 
-	expSpCharList.forEach(c=>{
+	expSpCharList.forEach(function(c){
 		if(cmap[c] && pattern.indexOf(c) > -1){
 	    pattern = pattern.replace(new RegExp(escapeRegExp(c), 'g'), cmap[c]);
 		}
@@ -314,7 +314,7 @@ function expgen(pattern, flag){
 	log("정규식 문자 시프트:", pattern);
 
   // 와일드 카드가 escape처리를 피하도록 문자 시프트
-  spchArr.forEach(c=>{
+  spchArr.forEach(function(c){
 		if(cmap[c] && pattern.indexOf(c) > -1){
 	    pattern = pattern.replace(new RegExp(escapeRegExp(c), 'g'), cmap[c]);
 		}
@@ -327,7 +327,7 @@ function expgen(pattern, flag){
 	log("escape:", pattern);
 
   // 복구
-  spchArr.forEach(c=>{
+  spchArr.forEach(function(c){
 		if(cmap[c] && pattern.indexOf(c) > -1){
 	    pattern = pattern.replace(new RegExp(cmap[c], 'g'), c);
 		}
@@ -335,7 +335,7 @@ function expgen(pattern, flag){
   log("와일드카드 문자 복구:", pattern);
 
 	// 복구
-  expSpCharList.forEach(c=>{
+  expSpCharList.forEach(function(c){
 		if(cmap[c] && pattern.indexOf(c) > -1){
 	    pattern = pattern.replace(new RegExp(cmap[c], 'g'), c);
 		}
@@ -362,7 +362,7 @@ function expgen(pattern, flag){
   }
   log("1단계치환문자 복구", pattern);
 
-  spchArr.forEach(c=>{
+  spchArr.forEach(function(c){
     if(typeof spch[c] === "function"){
       pattern = spch[c](pattern);
     }else{
