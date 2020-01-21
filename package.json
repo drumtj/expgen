@@ -1,6 +1,6 @@
 {
   "name": "@drumtj/expgen",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "javascript easy regexp generator",
   "main": "./dist/expgen.umd.js",
   "scripts": {
