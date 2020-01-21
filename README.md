@@ -25,7 +25,7 @@ $ npm install @drumtj/expgen
 Using cdn:
 
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.3/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.4/dist/expgen.js"></script>
 ```
 
 Using amd, commonjS Module
@@ -93,10 +93,10 @@ expgen("[&h]"); // /^[0-9a-fA-F]$/
 expgen("[^&h]"); // /^[0-9a-fA-F]$/
 
 // Special Characters
-expgen(`[-\\'\\"!@#$%^&*(){},.+~:;_|\\/?<>\\[\\]\`]`); // /^[-\'\"!@#$%^&*(){},.+~:;_|\/?<>\[\]`]$/
-expgen("[&sb]"); // /^[-\'\"!@#$%^&*(){},.+~:;_|\/?<>\[\]`]$/
+expgen(`[-\\'\\"!@#$%^&*(){},.+~:;_|\\/?<>\\[\\]\`]`); // /^[-\'\"!@#\$%^&\*\(\)\{\},\.\+~:;_\|\/\?<>\[\]`]$/
+expgen("[&sb]"); // /^[\-\'\"!@#\$%\^&\*\(\)\{\},\.\+~:;_\|\/\?\<\>\[\]`\\]$/
 // not
-expgen("[^&sb]"); // /^[-\'\"!@#$%^&*(){},.+~:;_|\/?<>\[\]`]$/
+expgen("[^&sb]"); // /^[^\-\'\"!@#\$%\^&\*\(\)\{\},\.\+~:;_\|\/\?\<\>\[\]`\\]$/
 
 
 ///// test example /////
@@ -358,7 +358,7 @@ expgen("&rgba").test("rgba(111,111,222,0.1)"); // true
 expgen("&rgba").test("rgba(111, 111, 222, 1)"); // true
 
 // symbol validation
-expgen("&symbol"); // /^([-\'\"!@#$%^&*(){},.+~:;_|\/?<>\[\]`\\]+)$/
+expgen("&symbol"); // /^([\-\'\"!@#\$%\^&\*\(\)\{\},\.\+~:;_\|\/\?\<\>\[\]`\\]+)$/
 expgen("&symbol").test("%"); // true
 expgen("&symbol").test("f"); // false
 
