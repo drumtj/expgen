@@ -24,7 +24,7 @@ $ npm install @drumtj/expgen
 
 Using cdn:
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.13/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.14/dist/expgen.js"></script>
 ```
 
 Using ES2015
@@ -189,8 +189,8 @@ expgen("[a-zA-Z0-9]{3,6}");
 ////////// use getter ///////////
 
 // get character at
-expgen("??{?}?").get("abcdef"); // [""]
-expgen("??{?}?").get("abcde"); // ["c"]
+expgen("??{?}?").get("abcde"); // [""]
+expgen("??{?}?").get("abcd"); // ["c"]
 expgen("??{?}?").get("bcde"); // ["d"]
 expgen("??{?}?").get("cde"); // ["e"]
 expgen("??{?}?").get("de"); // [""]
