@@ -126,11 +126,11 @@ const config = {
 let libraryName = "expgen";
 let pfh = `(function webpackUniversalModuleDefinition(root, factory) {
   if(typeof exports === 'object' && typeof module === 'object')
-    module.exports = factory().default;
+    module.exports = factory();
   else if(typeof define === 'function' && define.amd)
     define([], factory);
   else if(typeof exports === 'object')
-    exports['MyLibrary'] = factory().default;
+    exports['MyLibrary'] = factory();
   else{
     root['MyLibrary'] = factory().default;
   }
