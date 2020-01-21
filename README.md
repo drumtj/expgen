@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@drumtj/expgen.svg?style=flat)](https://www.npmjs.com/package/@drumtj/expgen)
 [![license](https://img.shields.io/npm/l/@drumtj/expgen.svg)](#)
 
-easy javascript regular expression
+easy javascript regular expression (very tiny sources)
 
 ## Features
 
@@ -24,7 +24,7 @@ $ npm install @drumtj/expgen
 
 Using cdn:
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.15/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.16/dist/expgen.js"></script>
 ```
 
 Using ES2015
