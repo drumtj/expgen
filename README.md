@@ -25,7 +25,7 @@ $ npm install @drumtj/expgen
 Using cdn:
 
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.4/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.5/dist/expgen.js"></script>
 ```
 
 Using amd, commonjS Module
@@ -390,7 +390,7 @@ expgen("&number").getAll("234.23-453,343aaaa-1.4444444444e+2;;;444");
 //   ["444", "", "444", undefined, undefined]
 // ]
 
-expgen("{010##}").unwrap().getAll("sdfsdf01055sefse01022sfsdf01033");
+expgen("{010##}").getAll("sdfsdf01055sefse01022sfsdf01033");
 // [
 //   ["01055"],
 //   ["01022"],
