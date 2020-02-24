@@ -24,7 +24,7 @@ $ npm install @drumtj/expgen
 
 Using cdn:
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.19/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.20/dist/expgen.js"></script>
 ```
 
 CommonJS
@@ -87,7 +87,7 @@ expgen("[^&ko]"); // /^[^ㄱ-힣]$/
 expgen("[0-9a-fA-F]"); // /^[0-9a-fA-F]$/
 expgen("[&h]"); // /^[0-9a-fA-F]$/
 // not
-expgen("[^&h]"); // /^[0-9a-fA-F]$/
+expgen("[^&h]"); // /^[^0-9a-fA-F]$/
 
 // Special Characters
 expgen(`[-\\'\\"!@#$%^&*(){},.+~:;_|\\/?<>\\[\\]\`]`); // /^[-\'\"!@#\$%^&\*\(\)\{\},\.\+~:;_\|\/\?<>\[\]`]$/
