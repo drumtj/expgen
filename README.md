@@ -24,12 +24,15 @@ $ npm install @drumtj/expgen
 
 Using cdn:
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.16/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.17/dist/expgen.js"></script>
 ```
 
-Using ES2015
+CommonJS
 ```js
 import expgen from '@drumtj/expgen';
+```
+```js
+const expgen = require('@drumtj/expgen');
 ```
 
 ## How To
