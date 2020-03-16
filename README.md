@@ -97,7 +97,7 @@ expgen("[^&sb]"); // /^[^\-\'\"!@#\$%\^&\*\(\)\{\},\.\+~:;_\|\/\?\<\>\[\]`\\]$/
 
 
 ///// test example /////
-expgen("[&a][&a][&a]").test("aA0"); // true
+expgen("[&a][&a][&a]").test("aA0"); // false
 expgen("0x[&h][&h][&h][&h][&h][&h]").test("0xa8f4e3"); // true
 expgen("0x[&h][&h][&h][&h][&h][&h]").test("0xg8f4e3"); // false
 ```
