@@ -24,7 +24,7 @@ $ npm install @drumtj/expgen
 
 Using cdn:
 ```html
-<script src="https://unpkg.com/@drumtj/expgen@1.0.21/dist/expgen.js"></script>
+<script src="https://unpkg.com/@drumtj/expgen@1.0.22/dist/expgen.js"></script>
 ```
 
 CommonJS
