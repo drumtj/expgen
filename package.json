@@ -7,7 +7,6 @@
     "start": "webpack-dev-server --contentBase ./dist --open chrome --open-page test.html",
     "build": "webpack -p",
     "release": "npm run build && npm run deploy && np --no-cleanup --yolo --no-release-draft",
-    "_release": "npm run build && npm run deploy",
     "deploy": "git add -A && git commit -m 'deploy' && git push origin master",
     "deploy_with_page": "git add -A && git commit -m 'deploy' && git push origin master && git subtree push --prefix examples origin gh-pages",
     "pull": "git pull origin master --allow-unrelated-histories"
