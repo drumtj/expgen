@@ -191,7 +191,7 @@ const expSpCharList = ['|', '^', '$', '\@', '+', '.', '*'];
 const imgExt = "(png|jpg|jpeg|gif|tif|bmp|ai|svg|jpe|jfif|jp2|j2c|psd|tga|taga)";
 // const rgbNum = "[1-2]?[0-9]?[0-9]";
 const presets = {
-	"&email": "{{[&a][&w-_]*}\\@{[&a][&w-_]*(\\.[&a]+){1,2}}}",
+	"&email": "{{[&w-_]*}\\@{[&a][&w-_]*(\\.[&a]+){1,2}}}",
 	// "&number": "{[-+]?[&d]+([.][&d]+)?}",
 	// "&number": "{[-+]?[&d]+([.][&d]+)?(e[+][&d]+)?}",
 	"&number": "{{[-+]?}{[&d]+}([.]{[&d]+})?({e[+][&d]+})?}",
